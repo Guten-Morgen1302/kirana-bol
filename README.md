@@ -45,7 +45,7 @@ What this does **not** show: the noise is simulated (procedural bed + 8 kHz G.71
 Needs Node 20+ and, for the benchmark noise levels, ffmpeg.
 
 ```
-git clone <this repo>
+git clone https://github.com/Guten-Morgen1302/kirana-bol.git
 cd kirana-bol
 npm install
 cp .env.example .env        # Windows PowerShell: Copy-Item .env.example .env

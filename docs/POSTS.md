@@ -27,7 +27,7 @@ Always say **simulated** next to the number. Never say "best" or "beats".
 > What I found: [two honest sentences from results.md, including one failure].
 > What it does not prove: the noise is simulated, not a real call, and 30 orders is a small sample ([F1 95% CI]).
 >
-> Try it: [demo URL]   Code + method: [GitHub URL]
+> Try it: [demo URL]   Code + method: https://github.com/Guten-Morgen1302/kirana-bol
 >
 > @Gnani.ai #GnaniAI #GreatIndianAIInternshipChallenge
 
