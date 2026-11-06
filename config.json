@@ -1,0 +1,29 @@
+{
+  "model": "prisma-v2.5",
+  "language": "hi-IN",
+  "sttUrl": "https://api.vachana.ai/stt/v3",
+  "ttsUrl": "https://api.vachana.ai/api/v1/tts/inference",
+  "ttsVoice": "Nalini",
+  "ttsModel": "timbre-v2.5",
+  "ttsSampleRate": 48000,
+  "retry": { "max": 2, "backoffMs": [500, 1500], "timeoutMs": 30000 },
+  "parser": {
+    "acceptThreshold": 0.8,
+    "clarifyThreshold": 0.65,
+    "minFuzzyLength": 4,
+    "quantityWindow": 3
+  },
+  "limits": {
+    "maxBytes": 2097152,
+    "maxSeconds": 30,
+    "perMinute": 30,
+    "dailyCap": 100
+  },
+  "bench": {
+    "levels": ["clean", "10"],
+    "seed": 42,
+    "benchmarkVersion": 1,
+    "cleanSampleRate": 16000,
+    "telephonySampleRate": 8000
+  }
+}

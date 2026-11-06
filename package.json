@@ -1,0 +1,20 @@
+{
+  "name": "kirana-bol",
+  "version": "0.1.0",
+  "description": "Hinglish voice order desk for kirana shops, plus a reproducible noise benchmark for Gnani's Prisma speech-to-text model.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "test": "node --test \"test/*.test.js\"",
+    "bench": "node bench.js",
+    "ingest": "node tools/ingest.js",
+    "bench:mock": "node bench.js --mock --limit 6 --out results.mock.json"
+  },
+  "dependencies": {
+    "fuzzball": "^2.2.2"
+  }
+}

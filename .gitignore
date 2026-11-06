@@ -1,0 +1,20 @@
+# secrets: never commit these
+.env
+.env.*
+!.env.example
+
+# private working notes (schedule, outreach, cutoff assumptions)
+notes/
+
+# generated audio and tool state
+node_modules/
+data/clean/
+data/mixed/
+data/noise/
+.gstack/
+*.log
+results.mock.json
+
+# your own voice recordings (private until you decide to publish them)
+recordings/
+data/human/

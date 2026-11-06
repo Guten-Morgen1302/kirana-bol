@@ -1,0 +1,1065 @@
+{
+  "benchmark_version": 1,
+  "created": "2026-11-06T09:14:10.630Z",
+  "mock": false,
+  "labels": [
+    "Noise levels are SIMULATED: synthetic or recorded speech + seeded noise bed + 8 kHz G.711 telephony chain. Not real phone calls."
+  ],
+  "config": {
+    "model": "prisma-v2.5",
+    "language": "hi-IN",
+    "source": "dir",
+    "seed": 42,
+    "bed": "street",
+    "levels": [
+      "clean",
+      "10",
+      "0"
+    ],
+    "parser": {
+      "acceptThreshold": 0.8,
+      "clarifyThreshold": 0.65,
+      "minFuzzyLength": 4,
+      "quantityWindow": 3
+    }
+  },
+  "summary": {
+    "0": {
+      "n_orders": 10,
+      "n_failed": 0,
+      "items_expected": 21,
+      "tp": 8,
+      "fp": 1,
+      "fn": 13,
+      "precision": 0.889,
+      "recall": 0.381,
+      "f1": 0.533,
+      "f1_ci95": [
+        0.308,
+        0.722
+      ],
+      "stt_attributable_misses": 12,
+      "wer_mean": 0.586,
+      "wer_n": 10,
+      "sample_rate": 8000
+    },
+    "10": {
+      "n_orders": 10,
+      "n_failed": 0,
+      "items_expected": 21,
+      "tp": 20,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1,
+      "recall": 0.952,
+      "f1": 0.976,
+      "f1_ci95": [
+        0.919,
+        1
+      ],
+      "stt_attributable_misses": 1,
+      "wer_mean": 0.186,
+      "wer_n": 10,
+      "sample_rate": 8000
+    },
+    "clean": {
+      "n_orders": 10,
+      "n_failed": 0,
+      "items_expected": 21,
+      "tp": 21,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "f1_ci95": [
+        1,
+        1
+      ],
+      "stt_attributable_misses": 0,
+      "wer_mean": 0.163,
+      "wer_n": 10,
+      "sample_rate": 16000
+    }
+  },
+  "gallery": [
+    {
+      "order_id": "o01",
+      "level": "0",
+      "said": "bhaiya ek kilo chawal aur do packet maggi",
+      "transcript": "यह 17 सावन और 2 पैकेज है",
+      "expected": "chawal 1 kg, maggi 2 packet",
+      "got": "(nothing understood)"
+    },
+    {
+      "order_id": "o10",
+      "level": "0",
+      "said": "chai patti do sau gram aur cheeni ek kilo",
+      "transcript": "चाय पत्ती दो 3 और चीनी इस्ति",
+      "expected": "chai_patti 200 gram, cheeni 1 kg",
+      "got": "chai_patti 2 packet, cheeni 1 kg"
+    },
+    {
+      "order_id": "o12",
+      "level": "0",
+      "said": "ek kilo suji aur ek kilo poha",
+      "transcript": "30 किलो पीजी और एक",
+      "expected": "suji 1 kg, poha 1 kg",
+      "got": "(nothing understood)"
+    }
+  ],
+  "rows": [
+    {
+      "order_id": "o01",
+      "level": "clean",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "bhaiya ek kilo chawal aur do packet maggi",
+      "status": "ok",
+      "sample_rate": 16000,
+      "snr_measured": null,
+      "transcript": "भैया एक किलो चावल और 2 पैकेट मैगी।",
+      "expected": "chawal 1 kg, maggi 2 packet",
+      "got": "chawal 1 kg, maggi 2 packet",
+      "parsed": [
+        {
+          "item": "chawal",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "maggi",
+          "qty": 2,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.125
+    },
+    {
+      "order_id": "o03",
+      "level": "clean",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "teen packet biscuit aur ek packet namak",
+      "status": "ok",
+      "sample_rate": 16000,
+      "snr_measured": null,
+      "transcript": "3 पैकेट बिस्किट और एक पैकेट नमक।",
+      "expected": "biscuit 3 packet, namak 1 packet",
+      "got": "biscuit 3 packet, namak 1 packet",
+      "parsed": [
+        {
+          "item": "biscuit",
+          "qty": 3,
+          "unit": "packet",
+          "flags": []
+        },
+        {
+          "item": "namak",
+          "qty": 1,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.14285714285714285
+    },
+    {
+      "order_id": "o05",
+      "level": "clean",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek litre doodh aur ek dozen ande",
+      "status": "ok",
+      "sample_rate": 16000,
+      "snr_measured": null,
+      "transcript": "एक लीटर दूध और एक डज़न अंडे",
+      "expected": "doodh 1 litre, ande 1 dozen",
+      "got": "doodh 1 litre, ande 1 dozen",
+      "parsed": [
+        {
+          "item": "doodh",
+          "qty": 1,
+          "unit": "litre",
+          "flags": []
+        },
+        {
+          "item": "ande",
+          "qty": 1,
+          "unit": "dozen",
+          "flags": []
+        }
+      ],
+      "not_understood": [
+        "डजन"
+      ],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.14285714285714285
+    },
+    {
+      "order_id": "o10",
+      "level": "clean",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "chai patti do sau gram aur cheeni ek kilo",
+      "status": "ok",
+      "sample_rate": 16000,
+      "snr_measured": null,
+      "transcript": "चाय पत्ती 200 ग्राम और चीनी एक किलो",
+      "expected": "chai_patti 200 gram, cheeni 1 kg",
+      "got": "chai_patti 200 gram, cheeni 1 kg",
+      "parsed": [
+        {
+          "item": "chai_patti",
+          "qty": 200,
+          "unit": "gram",
+          "flags": []
+        },
+        {
+          "item": "cheeni",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.375
+    },
+    {
+      "order_id": "o12",
+      "level": "clean",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek kilo suji aur ek kilo poha",
+      "status": "ok",
+      "sample_rate": 16000,
+      "snr_measured": null,
+      "transcript": "एक किलो सूजी और एक किलो पोहा।",
+      "expected": "suji 1 kg, poha 1 kg",
+      "got": "suji 1 kg, poha 1 kg",
+      "parsed": [
+        {
+          "item": "suji",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "poha",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0
+    },
+    {
+      "order_id": "o13",
+      "level": "clean",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "do packet chips aur ek packet namkeen",
+      "status": "ok",
+      "sample_rate": 16000,
+      "snr_measured": null,
+      "transcript": "2 पैकेट चिप्स और एक पैकेट नमकीन",
+      "expected": "chips 2 packet, namkeen 1 packet",
+      "got": "chips 2 packet, namkeen 1 packet",
+      "parsed": [
+        {
+          "item": "chips",
+          "qty": 2,
+          "unit": "packet",
+          "flags": []
+        },
+        {
+          "item": "namkeen",
+          "qty": 1,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.14285714285714285
+    },
+    {
+      "order_id": "o20",
+      "level": "clean",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek kilo cheeni do kilo chawal ek packet namak",
+      "status": "ok",
+      "sample_rate": 16000,
+      "snr_measured": null,
+      "transcript": "एक किलो चीनी 2 किलो चावल एक पैकेट नमक",
+      "expected": "cheeni 1 kg, chawal 2 kg, namak 1 packet",
+      "got": "cheeni 1 kg, chawal 2 kg, namak 1 packet",
+      "parsed": [
+        {
+          "item": "cheeni",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "chawal",
+          "qty": 2,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "namak",
+          "qty": 1,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.1111111111111111
+    },
+    {
+      "order_id": "o21",
+      "level": "clean",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "teen sabun aur ek surf packet",
+      "status": "ok",
+      "sample_rate": 16000,
+      "snr_measured": null,
+      "transcript": "3 साबुन और एक सर्फ़ पैकेट।",
+      "expected": "sabun 3 piece, surf 1 packet",
+      "got": "sabun 3 piece, surf 1 packet",
+      "parsed": [
+        {
+          "item": "sabun",
+          "qty": 3,
+          "unit": "piece",
+          "flags": []
+        },
+        {
+          "item": "surf",
+          "qty": 1,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.16666666666666666
+    },
+    {
+      "order_id": "o26",
+      "level": "clean",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "teen kilo chawal aur do kilo aata",
+      "status": "ok",
+      "sample_rate": 16000,
+      "snr_measured": null,
+      "transcript": "3 किलो चावल 2 किलो आटा।",
+      "expected": "chawal 3 kg, atta 2 kg",
+      "got": "chawal 3 kg, atta 2 kg",
+      "parsed": [
+        {
+          "item": "chawal",
+          "qty": 3,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "atta",
+          "qty": 2,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.42857142857142855
+    },
+    {
+      "order_id": "o29",
+      "level": "clean",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek kilo moong dal aur ek kilo toor dal",
+      "status": "ok",
+      "sample_rate": 16000,
+      "snr_measured": null,
+      "transcript": "एक किलो मूंग दाल और एक किलो तूर दाल",
+      "expected": "moong_dal 1 kg, toor_dal 1 kg",
+      "got": "moong_dal 1 kg, toor_dal 1 kg",
+      "parsed": [
+        {
+          "item": "moong_dal",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "toor_dal",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0
+    },
+    {
+      "order_id": "o01",
+      "level": "10",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "bhaiya ek kilo chawal aur do packet maggi",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 10,
+      "transcript": "भैया एक किलो चावल और 2 पैकेट मैगी",
+      "expected": "chawal 1 kg, maggi 2 packet",
+      "got": "chawal 1 kg, maggi 2 packet",
+      "parsed": [
+        {
+          "item": "chawal",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "maggi",
+          "qty": 2,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.125
+    },
+    {
+      "order_id": "o03",
+      "level": "10",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "teen packet biscuit aur ek packet namak",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 10,
+      "transcript": "3 पैकेट बिस्किट और एक पैकेट नमक",
+      "expected": "biscuit 3 packet, namak 1 packet",
+      "got": "biscuit 3 packet, namak 1 packet",
+      "parsed": [
+        {
+          "item": "biscuit",
+          "qty": 3,
+          "unit": "packet",
+          "flags": []
+        },
+        {
+          "item": "namak",
+          "qty": 1,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.14285714285714285
+    },
+    {
+      "order_id": "o05",
+      "level": "10",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek litre doodh aur ek dozen ande",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 10,
+      "transcript": "एक लीटर दूध और एक दर्जन अंडे",
+      "expected": "doodh 1 litre, ande 1 dozen",
+      "got": "doodh 1 litre, ande 1 dozen",
+      "parsed": [
+        {
+          "item": "doodh",
+          "qty": 1,
+          "unit": "litre",
+          "flags": []
+        },
+        {
+          "item": "ande",
+          "qty": 1,
+          "unit": "dozen",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0
+    },
+    {
+      "order_id": "o10",
+      "level": "10",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "chai patti do sau gram aur cheeni ek kilo",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 10,
+      "transcript": "चाय पत्ती 200 ग्राम और चीनी एक किलो",
+      "expected": "chai_patti 200 gram, cheeni 1 kg",
+      "got": "chai_patti 200 gram, cheeni 1 kg",
+      "parsed": [
+        {
+          "item": "chai_patti",
+          "qty": 200,
+          "unit": "gram",
+          "flags": []
+        },
+        {
+          "item": "cheeni",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.375
+    },
+    {
+      "order_id": "o12",
+      "level": "10",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek kilo suji aur ek kilo poha",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 10,
+      "transcript": "एक किलो सूजी और एक किलो पोखा",
+      "expected": "suji 1 kg, poha 1 kg",
+      "got": "suji 1 kg",
+      "parsed": [
+        {
+          "item": "suji",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [
+        "पोखा"
+      ],
+      "tp": 1,
+      "fp": 0,
+      "fn": 1,
+      "stt_misses": 1,
+      "wer": 0.14285714285714285
+    },
+    {
+      "order_id": "o13",
+      "level": "10",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "do packet chips aur ek packet namkeen",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 10,
+      "transcript": "2 पैकेट चिप्स और एक पैकेट नमकीन",
+      "expected": "chips 2 packet, namkeen 1 packet",
+      "got": "chips 2 packet, namkeen 1 packet",
+      "parsed": [
+        {
+          "item": "chips",
+          "qty": 2,
+          "unit": "packet",
+          "flags": []
+        },
+        {
+          "item": "namkeen",
+          "qty": 1,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.14285714285714285
+    },
+    {
+      "order_id": "o20",
+      "level": "10",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek kilo cheeni do kilo chawal ek packet namak",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 10,
+      "transcript": "एक किलो चीनी 2 किलो चावल एक पैकेट नमक",
+      "expected": "cheeni 1 kg, chawal 2 kg, namak 1 packet",
+      "got": "cheeni 1 kg, chawal 2 kg, namak 1 packet",
+      "parsed": [
+        {
+          "item": "cheeni",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "chawal",
+          "qty": 2,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "namak",
+          "qty": 1,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.1111111111111111
+    },
+    {
+      "order_id": "o21",
+      "level": "10",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "teen sabun aur ek surf packet",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 10,
+      "transcript": "3 साबुन और एक सर्फ पैकेट",
+      "expected": "sabun 3 piece, surf 1 packet",
+      "got": "sabun 3 piece, surf 1 packet",
+      "parsed": [
+        {
+          "item": "sabun",
+          "qty": 3,
+          "unit": "piece",
+          "flags": []
+        },
+        {
+          "item": "surf",
+          "qty": 1,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.16666666666666666
+    },
+    {
+      "order_id": "o26",
+      "level": "10",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "teen kilo chawal aur do kilo aata",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 10,
+      "transcript": "3 किलो चावल 2 किलो आटा",
+      "expected": "chawal 3 kg, atta 2 kg",
+      "got": "chawal 3 kg, atta 2 kg",
+      "parsed": [
+        {
+          "item": "chawal",
+          "qty": 3,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "atta",
+          "qty": 2,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.42857142857142855
+    },
+    {
+      "order_id": "o29",
+      "level": "10",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek kilo moong dal aur ek kilo toor dal",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 10,
+      "transcript": "एक किलो मूंग दाल और एक किलो तूरदाल",
+      "expected": "moong_dal 1 kg, toor_dal 1 kg",
+      "got": "moong_dal 1 kg, toor_dal 1 kg",
+      "parsed": [
+        {
+          "item": "moong_dal",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "toor_dal",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.2222222222222222
+    },
+    {
+      "order_id": "o01",
+      "level": "0",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "bhaiya ek kilo chawal aur do packet maggi",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 0,
+      "transcript": "यह 17 सावन और 2 पैकेज है",
+      "expected": "chawal 1 kg, maggi 2 packet",
+      "got": "(nothing understood)",
+      "parsed": [],
+      "not_understood": [
+        "सावन",
+        "पैकेज"
+      ],
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "stt_misses": 2,
+      "wer": 0.875
+    },
+    {
+      "order_id": "o03",
+      "level": "0",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "teen packet biscuit aur ek packet namak",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 0,
+      "transcript": "3 पैकेट बिस्किट और एक पैकेट नमक",
+      "expected": "biscuit 3 packet, namak 1 packet",
+      "got": "biscuit 3 packet, namak 1 packet",
+      "parsed": [
+        {
+          "item": "biscuit",
+          "qty": 3,
+          "unit": "packet",
+          "flags": []
+        },
+        {
+          "item": "namak",
+          "qty": 1,
+          "unit": "packet",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "stt_misses": 0,
+      "wer": 0.14285714285714285
+    },
+    {
+      "order_id": "o05",
+      "level": "0",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek litre doodh aur ek dozen ande",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 0,
+      "transcript": "एक लीटर दूध और एक दर्जन एमएल",
+      "expected": "doodh 1 litre, ande 1 dozen",
+      "got": "doodh 1 litre",
+      "parsed": [
+        {
+          "item": "doodh",
+          "qty": 1,
+          "unit": "litre",
+          "flags": []
+        }
+      ],
+      "not_understood": [
+        "एमएल"
+      ],
+      "tp": 1,
+      "fp": 0,
+      "fn": 1,
+      "stt_misses": 1,
+      "wer": 0.14285714285714285
+    },
+    {
+      "order_id": "o10",
+      "level": "0",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "chai patti do sau gram aur cheeni ek kilo",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 0,
+      "transcript": "चाय पत्ती दो 3 और चीनी इस्ति",
+      "expected": "chai_patti 200 gram, cheeni 1 kg",
+      "got": "chai_patti 2 packet, cheeni 1 kg",
+      "parsed": [
+        {
+          "item": "chai_patti",
+          "qty": 2,
+          "unit": "packet",
+          "flags": []
+        },
+        {
+          "item": "cheeni",
+          "qty": 1,
+          "unit": "kg",
+          "flags": [
+            "defaulted-quantity"
+          ]
+        }
+      ],
+      "not_understood": [
+        "इस्ति"
+      ],
+      "tp": 1,
+      "fp": 1,
+      "fn": 1,
+      "stt_misses": 0,
+      "wer": 0.75
+    },
+    {
+      "order_id": "o12",
+      "level": "0",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek kilo suji aur ek kilo poha",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 0,
+      "transcript": "30 किलो पीजी और एक",
+      "expected": "suji 1 kg, poha 1 kg",
+      "got": "(nothing understood)",
+      "parsed": [],
+      "not_understood": [
+        "पीजी"
+      ],
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "stt_misses": 2,
+      "wer": 0.5714285714285714
+    },
+    {
+      "order_id": "o13",
+      "level": "0",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "do packet chips aur ek packet namkeen",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 0,
+      "transcript": "भूल ताकि और एक पैकेज में थी",
+      "expected": "chips 2 packet, namkeen 1 packet",
+      "got": "(nothing understood)",
+      "parsed": [],
+      "not_understood": [
+        "भूल",
+        "ताकि",
+        "पैकेज",
+        "में"
+      ],
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "stt_misses": 2,
+      "wer": 0.8571428571428571
+    },
+    {
+      "order_id": "o20",
+      "level": "0",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek kilo cheeni do kilo chawal ek packet namak",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 0,
+      "transcript": "एक किलो चीनी 2 किलो चावल एक पैकेट",
+      "expected": "cheeni 1 kg, chawal 2 kg, namak 1 packet",
+      "got": "cheeni 1 kg, chawal 2 kg",
+      "parsed": [
+        {
+          "item": "cheeni",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        },
+        {
+          "item": "chawal",
+          "qty": 2,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 2,
+      "fp": 0,
+      "fn": 1,
+      "stt_misses": 1,
+      "wer": 0.2222222222222222
+    },
+    {
+      "order_id": "o21",
+      "level": "0",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "teen sabun aur ek surf packet",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 0,
+      "transcript": "3 साल अरे",
+      "expected": "sabun 3 piece, surf 1 packet",
+      "got": "(nothing understood)",
+      "parsed": [],
+      "not_understood": [
+        "साल",
+        "अरे"
+      ],
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "stt_misses": 2,
+      "wer": 1
+    },
+    {
+      "order_id": "o26",
+      "level": "0",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "teen kilo chawal aur do kilo aata",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 0,
+      "transcript": "3 3 चावल 2 8",
+      "expected": "chawal 3 kg, atta 2 kg",
+      "got": "chawal 3 kg",
+      "parsed": [
+        {
+          "item": "chawal",
+          "qty": 3,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [],
+      "tp": 1,
+      "fp": 0,
+      "fn": 1,
+      "stt_misses": 1,
+      "wer": 0.8571428571428571
+    },
+    {
+      "order_id": "o29",
+      "level": "0",
+      "model": "prisma-v2.5",
+      "source": "dir",
+      "said": "ek kilo moong dal aur ek kilo toor dal",
+      "status": "ok",
+      "sample_rate": 8000,
+      "snr_measured": 0,
+      "transcript": "एक किलो मूंग दाल और 2 लौटी मिला",
+      "expected": "moong_dal 1 kg, toor_dal 1 kg",
+      "got": "moong_dal 1 kg",
+      "parsed": [
+        {
+          "item": "moong_dal",
+          "qty": 1,
+          "unit": "kg",
+          "flags": []
+        }
+      ],
+      "not_understood": [
+        "लौटी",
+        "मिला"
+      ],
+      "tp": 1,
+      "fp": 0,
+      "fn": 1,
+      "stt_misses": 1,
+      "wer": 0.4444444444444444
+    }
+  ]
+}
