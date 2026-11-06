@@ -4,6 +4,10 @@ Rules from the contest page: post publicly on LinkedIn and/or X, tag Gnani AI's 
 
 Do not publish any number you have not measured. Replace every `[ ]` below with the real value from `results.md`.
 
+## Demo video
+
+YouTube: https://youtu.be/3_k3QTzPp2w (put this link in both posts and in the submission form).
+
 ## The hook (first line decides everything)
 
 Pick the one that matches your real result.

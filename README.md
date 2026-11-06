@@ -1,34 +1,85 @@
+<div align="center">
+
 # Kirana Bol
 
-A Hinglish voice order desk for neighbourhood shops, plus a reproducible noise benchmark for Gnani AI's Prisma speech-to-text model. Built for the Great Indian AI Internship Challenge.
+### Hear Indian speech AI break. Then measure it.
 
-Speak or upload an order like **"bhaiya ek kilo chawal aur do packet maggi"** and the bill builds on screen.
+A Hinglish voice order desk for neighbourhood shops, plus a reproducible noise benchmark for **Gnani AI's Prisma** speech model.
 
-## Results
+[![Demo video](https://img.shields.io/badge/WATCH-2%20min%20demo-ff7a1a?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/3_k3QTzPp2w)
+[![Tests](https://img.shields.io/badge/tests-57%20passing-3ddc84?style=for-the-badge)](test)
+[![Noise](https://img.shields.io/badge/noise-SIMULATED%20%26%20labelled-ff7a1a?style=for-the-badge)](docs/BENCHMARK.md)
+[![Built on](https://img.shields.io/badge/built%20on-Gnani%20Prisma%20%2B%20Timbre-1b1b1f?style=for-the-badge)](https://docs.gnani.ai/)
 
-First real run on 2026-11-06: model `prisma-v2.5`, language `hi-IN`, 30 invented orders (61 items), clean clips made with Gnani Timbre TTS, **SIMULATED** street noise (seeded synthetic bed) + 8 kHz G.711 telephone chain. Raw data: `results.json`, table: `results.md`.
+<a href="https://youtu.be/3_k3QTzPp2w"><img src="docs/media/thumbnail.png" alt="Kirana Bol demo video" width="760"></a>
 
-| Level | n orders | Item F1 | 95% CI | Precision | Recall | STT-attributable misses |
-|---|---|---|---|---|---|---|
-| clean (16 kHz) | 30 | 1.000 | 1.000 to 1.000 | 1.000 | 1.000 | 0 |
-| 10 dB SNR + telephone chain (SIMULATED) | 30 | 0.983 | 0.957 to 1.000 | 1.000 | 0.967 | 2 |
-| 0 dB SNR + telephone chain (SIMULATED) | 30 | 0.827 | 0.737 to 0.899 | 1.000 | 0.705 | 18 |
+<sub>Click the image to watch the demo on YouTube. Built for the Great Indian AI Internship Challenge.</sub>
 
-Same 90 clips through Prisma v3.0 (`results.v3.json`):
+</div>
+
+---
+
+## The 20-second version
+
+Say **"bhaiya ek kilo chawal aur do packet maggi"** and the bill builds on screen: item, quantity, unit, price. Then the interesting part: **how does Gnani's Prisma speech-to-text degrade when the audio sounds like a bad phone line?** 90 clips, 2 models, a human-voice run, and every failure shown.
+
+<div align="center">
+<img src="docs/media/demo.gif" alt="Live demo: speak an order, the bill builds, read it back" width="760">
+<br><sub>Real screen recording of the app (live mic), sped up 1.6x. Unedited apart from a crop that removes my browser tabs.</sub>
+</div>
+
+## What I found
+
+> Everything below is real output from the Gnani API. The noise is **simulated** (seeded synthetic bed + 8 kHz G.711 telephone codec), not recorded phone calls.
+
+| | clean | 10 dB noise | 0 dB noise |
+|---|---|---|---|
+| **TTS speech, Prisma v2.5** (30 orders, 61 items) | **1.000** | **0.983** | **0.827** |
+| **TTS speech, Prisma v3.0** | 0.984 | 0.992 | 0.914 |
+| **My own voice, Prisma v2.5** (10 orders, 21 items) | **1.000** | **0.976** | **0.533** |
+| **My own voice, Prisma v3.0** | 1.000 | 0.950 | 0.357 |
+
+*Item F1: an item counts only when item, quantity and unit all match. "Not understood" counts as missed. 95% confidence intervals are in the tables below.*
+
+1. **Fine at 10 dB, breaks at 0 dB**, for both models.
+2. **Plot twist.** On TTS speech v3.0 looked better at 0 dB. With **my real voice it was worse** (and sometimes answered with a confident, unrelated sentence). With n=10 the intervals overlap: **no winner claimed.**
+3. **The parser refuses to guess.** Wrong transcript, but no wrong bill. Unknown words go to a "not understood" list.
+
+<div align="center">
+<img src="docs/media/results-tts.jpg" alt="Item F1 for Prisma v2.5 and v3.0 on TTS speech" width="49%">
+<img src="docs/media/results-human.jpg" alt="Item F1 for Prisma v2.5 and v3.0 on my own voice" width="49%">
+</div>
+
+### What the model actually heard (verbatim from `results.json`)
+
+<div align="center">
+<img src="docs/media/failures.jpg" alt="Three real failures: what was said, what was heard, what the bill shows" width="760">
+</div>
+
+| said | heard at 0 dB | bill |
+|---|---|---|
+| "ek litre doodh aur ek dozen ande" | एक मीटर दूर और एक दर्जन अंदर | nothing understood |
+| "ek kilo suji aur ek kilo poha" | एक किलो चीज़ें और एक किलो कोको | nothing understood |
+| "do packet chips aur ek packet namkeen" (v3.0) | वो काफ़ी खुश और एक achievement थी | nothing understood |
+
+### Honest limits
+
+- The noise is **simulated**; the TTS tables use synthetic speech; my-voice tables are n=10 (wide intervals).
+- No comparison model, so **no "best model" claim**.
+- The first real run exposed **two parser bugs** (a fuzzy-matching library that treated unrelated Devanagari words as near-identical, and a stray unit corrupting a correct quantity). Both are fixed with regression tests. I fixed them after seeing those transcripts, so treat the numbers as "after one round of fixing on the same set". Details: [`docs/BENCHMARK.md`](docs/BENCHMARK.md).
+
+<details>
+<summary><b>Full tables with confidence intervals</b></summary>
+
+**TTS speech, 30 orders, 61 items** (`results.json`, `results.v3.json`)
 
 | Level | v2.5 Item F1 (95% CI) | v3.0 Item F1 (95% CI) | v2.5 STT-attributable misses | v3.0 STT-attributable misses |
 |---|---|---|---|---|
 | clean (16 kHz) | 1.000 (1.000 to 1.000) | 0.984 (0.949 to 1.000) | 0 | 0 |
-| 10 dB + telephone chain (SIMULATED) | 0.983 (0.957 to 1.000) | 0.992 (0.974 to 1.000) | 2 | 1 |
-| 0 dB + telephone chain (SIMULATED) | 0.827 (0.737 to 0.899) | 0.914 (0.855 to 0.960) | 18 | 8 |
+| 10 dB + phone chain (SIMULATED) | 0.983 (0.957 to 1.000) | 0.992 (0.974 to 1.000) | 2 | 1 |
+| 0 dB + phone chain (SIMULATED) | 0.827 (0.737 to 0.899) | 0.914 (0.855 to 0.960) | 18 | 8 |
 
-Reading it: at 10 dB both models keep the order almost intact. At 0 dB v3.0 misses fewer items outright (8 vs 18 of 61), but the two intervals overlap, so with 30 orders this is a **promising difference, not a proven one**. v3.0 also changes how it writes numbers (digits) and sometimes keeps English words in Latin script, so its WER is higher; item F1 is the metric to trust. Parser precision stays near 1.000 because unknown words are listed as "not understood", not guessed.
-
-Pitch (rule in `docs/SPEC.md` section 8): both models hold up at 10 dB and break at 0 dB, and the order of the two models at 0 dB depends on whether the speech is TTS or a human. See the human-voice table below.
-
-### Human voice, real room noise (n=10 orders, 21 items, my own recordings)
-
-I recorded 10 of the orders myself (mp3) and ran them as recorded ("clean" = my room noise, unprocessed), then with simulated noise + phone chain on top. Raw: `results.human.v2.json`, `results.human.v3.json`.
+**My own voice, real room noise, n=10 orders, 21 items** (`results.human.v2.json`, `results.human.v3.json`)
 
 | Level | v2.5 Item F1 (95% CI) | v3.0 Item F1 (95% CI) |
 |---|---|---|
@@ -36,15 +87,46 @@ I recorded 10 of the orders myself (mp3) and ran them as recorded ("clean" = my 
 | + 10 dB simulated noise + phone chain | 0.976 (0.919 to 1.000) | 0.950 (0.865 to 1.000) |
 | + 0 dB simulated noise + phone chain | 0.533 (0.308 to 0.722) | 0.357 (0.095 to 0.545) |
 
-What this changes: the v3.0 advantage seen with TTS speech **does not hold for a human voice**. At 0 dB with a real voice v2.5 held more of the order, and v3.0 sometimes returned fluent but unrelated sentences instead of the order (for example "वो काफ़ी खुश और एक achievement थी" for "do packet chips aur ek packet namkeen", or an empty transcript). Treat the model comparison as inconclusive at this sample size and say so. Both models read a real voice in a real room perfectly; both break at 0 dB. The honest headline is the breaking point, not "model X beats model Y".
+"STT-attributable misses" = expected items whose word never appears in the transcript, so the miss belongs to the speech model, not to the parser's quantity binding. WER is computed too but is secondary (script and number-format differences make it noisy).
 
-What this does **not** show: the noise is simulated (procedural bed + 8 kHz G.711 codec), not a real phone call; the TTS tables use TTS speech (the human-voice table is only n=10); 30 orders is a small sample (see the intervals); there is no comparison model, so no "best" claim. The parser was fixed twice after the first real run exposed two bugs (both have regression tests); numbers above are after those fixes. See `docs/BENCHMARK.md`.
+</details>
+
+---
+
+## How it works
+
+```mermaid
+flowchart LR
+  A[Browser mic or upload<br/>16 kHz mono WAV] --> B[One Node server<br/>size limit, rate limit, daily cap]
+  B --> C[Gnani Prisma<br/>speech to text]
+  C --> D[Deterministic parser<br/>no LLM]
+  D --> E[Bill: item, qty, unit, price]
+  B -. optional .-> F[Gnani Timbre<br/>read the bill back]
+```
+
+<div align="center">
+<img src="docs/media/how.jpg" alt="Pipeline diagram and parser trace" width="760">
+</div>
+
+- **Boring on purpose, so every error is traceable.** The parser is plain code: exact alias match first, fuzzy only for 4+ letter words, quantity binds to the item that follows it (a trailing quantity binds back), ambiguous words like "dal" are listed with candidates instead of guessed.
+- **Credits are protected.** Per-IP rate limit and a global daily cap run in one process (that is why it is one server, not serverless). The API key never leaves the server and is never logged.
+- **Errors are never silent.** Every failure is `application/problem+json` with a stable `code` and a `request_id`.
+
+### The benchmark
+
+<div align="center">
+<img src="docs/media/test.jpg" alt="30 orders times 3 noise levels equals 90 clips" width="760">
+</div>
+
+30 invented orders, each at clean / 10 dB / 0 dB: speech, plus seeded noise at a target SNR, then an 8 kHz G.711 phone codec, then Prisma, then the parser, then scoring. The mix test asserts the measured SNR is within 0.5 dB of the target. Method and schema: [`docs/BENCHMARK.md`](docs/BENCHMARK.md).
+
+---
 
 ## Quickstart (about 3 minutes with a key)
 
-Needs Node 20+ and, for the benchmark noise levels, ffmpeg.
+Needs Node 20+ and, for the benchmark noise levels, [ffmpeg](https://ffmpeg.org/).
 
-```
+```bash
 git clone https://github.com/Guten-Morgen1302/kirana-bol.git
 cd kirana-bol
 npm install
@@ -56,46 +138,55 @@ npm run dev                 # http://localhost:3000
 
 No key yet? `npm test` and `npm run bench:mock` run without one (the mock run proves the plumbing; its numbers are labelled MOCK and say nothing about Gnani).
 
-Try the parser alone, no key:
+<details>
+<summary><b>Try the parser alone, call the API, run the benchmark</b></summary>
 
-```
+```bash
+# parser only, no key
 node -e "import('./lib/parser.js').then(m=>console.log(JSON.stringify(m.parseOrder('ek kilo chawal aur do packet maggi').lines.map(l=>[l.name,l.qty,l.unit]))))"
-```
+# expected: [["Rice",1,"kg"],["Maggi noodles",2,"packet"]]
 
-Expected: `[["Rice",1,"kg"],["Maggi noodles",2,"packet"]]`.
-
-Call the API:
-
-```
+# call the API (16-bit PCM WAV)
 curl -s -X POST -H "Content-Type: audio/wav" --data-binary @clip.wav http://localhost:3000/api/order
+
+# benchmark
+npm run bench -- --dry-run --levels clean,10           # how many minutes of audio will be sent
+npm run bench -- --source tts --levels clean,10,0      # real run -> results.json + results.md
+npm run bench -- --source dir --clean-dir data/human   # your own recordings (see docs/RECORDING.md)
+npm run bench -- --rescore --out results.json          # re-score stored transcripts, no API calls
 ```
 
-## Run the benchmark
+Add `--resume` to continue after an interruption. Exit code 1 means some clips failed (the table shows `n failed`).
 
-```
-npm run bench -- --dry-run --levels clean,10      # how many minutes of audio will be sent
-npm run bench -- --source tts --levels clean,10   # real run, writes results.json and results.md
-```
+</details>
 
-Add `--resume` to continue after an interruption. Exit code 1 means some clips failed. Options and the results schema are in `docs/BENCHMARK.md`.
+<details>
+<summary><b>Repo map</b></summary>
 
-## How it works
+| Path | What |
+|---|---|
+| `server.js`, `public/` | the one-process server and the browser page |
+| `lib/parser.js`, `catalog.json` | deterministic Hinglish parser and the invented 40-item catalog |
+| `lib/noise.js`, `lib/score.js`, `bench.js` | noise mixing, telephone chain, scoring, benchmark CLI |
+| `lib/gnani.js` | Gnani STT/TTS client (retries only 429/5xx, never echoes the key) |
+| `data/orders.json` | the 30 invented orders with ground truth |
+| `results*.json`, `results.md` | the real results behind every number above |
+| `test/` | 57 tests (parser, scoring, noise, server, benchmark) |
+| `video/` | Remotion source of the demo video |
+| `docs/` | [SPEC](docs/SPEC.md), [ARCHITECTURE](docs/ARCHITECTURE.md), [BENCHMARK](docs/BENCHMARK.md), [DATA](docs/DATA.md), [DEPLOY](docs/DEPLOY.md), [DECISIONS](docs/DECISIONS.md) |
 
-Browser records, resamples to 16 kHz mono WAV, posts to a single Node process that checks the audio, applies a per-IP limit and a daily cap, calls Gnani Prisma, then a deterministic parser (no LLM) turns the transcript into a bill. Errors are always `application/problem+json` with a stable `code`. Details: `docs/ARCHITECTURE.md`. The parser rules and every other decision are in `docs/SPEC.md`.
+</details>
 
-## Docs
+---
 
-- `docs/SPEC.md` the one spec (start here)
-- `docs/RUNBOOK.md` do-this-in-order checklist
-- `docs/ARCHITECTURE.md`, `docs/BENCHMARK.md`, `docs/DATA.md`, `docs/DEPLOY.md`
-- `docs/POSTS.md`, `docs/SUBMISSION.md` contest posting and submission
-- `docs/DECISIONS.md` what the reviews decided and why; `docs/review/` the raw review records
-- `TODOS.md` what was deliberately left out
+## Honesty notes
 
-## Demo posts
+- **Reviews:** this project went through structured plan reviews (CEO, DX, Eng) before any code. Every "outside voice" was a second Claude instance, not an external model; the raw records are in [`docs/review/`](docs/review/) and the decisions in [`docs/DECISIONS.md`](docs/DECISIONS.md).
+- **Built with AI assistance** (Claude Code). The idea, recordings, key and final calls are the author's; tests and real API runs verify the code.
+- **Privacy:** prices and orders are invented; transcripts are not stored or logged; the demo video crops out the author's browser tabs.
 
-_Add the LinkedIn and X post links here after posting._
+## Links
 
-## Help
+[Demo video](https://youtu.be/3_k3QTzPp2w) · [Gnani API docs](https://docs.gnani.ai/) · [Gnani Discord](https://discord.gg/aECcvtABpq) · [`TODOS.md`](TODOS.md) (what was deliberately left out) · License: MIT (`LICENSE`)
 
-Gnani AI Discord: https://discord.gg/aECcvtABpq. API docs: https://docs.gnani.ai/. License: MIT (`LICENSE`).
+<div align="center"><sub>#GnaniAI #GreatIndianAIInternshipChallenge</sub></div>

@@ -18,3 +18,13 @@ results.mock.json
 # your own voice recordings (private until you decide to publish them)
 recordings/
 data/human/
+
+# video build artifacts and raw recordings (never commit)
+video/node_modules/
+video/out/
+video/public/clips/
+video/npm-install.log
+recordings-video/
+*.mkv
+__pycache__/
+*.pyc

@@ -11,6 +11,10 @@ The registration/submission flow asks for these (from gnani.ai/internship, read 
 - [ ] `results.md` has real numbers, the SIMULATED label, `n` and the CI.
 - [ ] No real phone numbers, account numbers, Aadhaar, PAN or recorded calls in the demo or the repo.
 
+## Demo video
+
+https://youtu.be/3_k3QTzPp2w
+
 ## Fields (edit the numbers)
 
 **Project title**
